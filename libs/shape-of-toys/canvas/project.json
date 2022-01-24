@@ -1,0 +1,23 @@
+{
+  "root": "libs/shape-of-toys/canvas",
+  "sourceRoot": "libs/shape-of-toys/canvas/src",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/shape-of-toys/canvas/**/*.{ts,tsx,js,jsx}"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/shape-of-toys/canvas"],
+      "options": {
+        "jestConfig": "libs/shape-of-toys/canvas/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  }
+}

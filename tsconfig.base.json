@@ -14,7 +14,17 @@
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
-    "paths": {}
+    "paths": {
+      "@sc-onboarding/shape-of-toys/canvas": [
+        "libs/shape-of-toys/canvas/src/index.ts"
+      ],
+      "@sc-onboarding/shape-of-toys/selected-items": [
+        "libs/shape-of-toys/selected-items/src/index.ts"
+      ],
+      "@sc-onboarding/shape-of-toys/store": [
+        "libs/shape-of-toys/store/src/index.ts"
+      ]
+    }
   },
   "exclude": ["node_modules", "tmp"]
 }

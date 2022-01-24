@@ -1,0 +1,25 @@
+{
+  "root": "libs/shape-of-toys/selected-items",
+  "sourceRoot": "libs/shape-of-toys/selected-items/src",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": [
+          "libs/shape-of-toys/selected-items/**/*.{ts,tsx,js,jsx}"
+        ]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/shape-of-toys/selected-items"],
+      "options": {
+        "jestConfig": "libs/shape-of-toys/selected-items/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  }
+}

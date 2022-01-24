@@ -2,6 +2,8 @@
   "version": 2,
   "projects": {
     "shape-of-toys": "apps/shape-of-toys",
-    "shape-of-toys-e2e": "apps/shape-of-toys-e2e"
+    "shape-of-toys-canvas": "libs/shape-of-toys/canvas",
+    "shape-of-toys-selected-items": "libs/shape-of-toys/selected-items",
+    "shape-of-toys-store": "libs/shape-of-toys/store"
   }
 }
