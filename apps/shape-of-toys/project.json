@@ -19,7 +19,6 @@
           "apps/shape-of-toys/src/favicon.ico",
           "apps/shape-of-toys/src/assets"
         ],
-        "styles": ["apps/shape-of-toys/src/styles.css"],
         "scripts": [],
         "webpackConfig": "@nrwl/react/plugins/webpack"
       },

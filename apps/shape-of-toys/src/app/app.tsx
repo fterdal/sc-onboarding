@@ -1,12 +1,8 @@
-import styles from './app.module.css';
-import NxWelcome from './nx-welcome';
-
 export function App() {
   return (
-    <>
-      <NxWelcome title="shape-of-toys" />
-      <div />
-    </>
+    <div>
+      <p>Hello World!</p>
+    </div>
   );
 }
 
