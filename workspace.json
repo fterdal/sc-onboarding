@@ -1,0 +1,7 @@
+{
+  "version": 2,
+  "projects": {
+    "shape-of-toys": "apps/shape-of-toys",
+    "shape-of-toys-e2e": "apps/shape-of-toys-e2e"
+  }
+}

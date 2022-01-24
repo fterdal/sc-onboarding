@@ -1,0 +1,73 @@
+{
+  "root": "apps/shape-of-toys",
+  "sourceRoot": "apps/shape-of-toys/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/web:webpack",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "compiler": "babel",
+        "outputPath": "dist/apps/shape-of-toys",
+        "index": "apps/shape-of-toys/src/index.html",
+        "baseHref": "/",
+        "main": "apps/shape-of-toys/src/main.tsx",
+        "polyfills": "apps/shape-of-toys/src/polyfills.ts",
+        "tsConfig": "apps/shape-of-toys/tsconfig.app.json",
+        "assets": [
+          "apps/shape-of-toys/src/favicon.ico",
+          "apps/shape-of-toys/src/assets"
+        ],
+        "styles": ["apps/shape-of-toys/src/styles.css"],
+        "scripts": [],
+        "webpackConfig": "@nrwl/react/plugins/webpack"
+      },
+      "configurations": {
+        "production": {
+          "fileReplacements": [
+            {
+              "replace": "apps/shape-of-toys/src/environments/environment.ts",
+              "with": "apps/shape-of-toys/src/environments/environment.prod.ts"
+            }
+          ],
+          "optimization": true,
+          "outputHashing": "all",
+          "sourceMap": false,
+          "namedChunks": false,
+          "extractLicenses": true,
+          "vendorChunk": false
+        }
+      }
+    },
+    "serve": {
+      "executor": "@nrwl/web:dev-server",
+      "options": {
+        "buildTarget": "shape-of-toys:build",
+        "hmr": true
+      },
+      "configurations": {
+        "production": {
+          "buildTarget": "shape-of-toys:build:production",
+          "hmr": false
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apps/shape-of-toys/**/*.{ts,tsx,js,jsx}"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/apps/shape-of-toys"],
+      "options": {
+        "jestConfig": "apps/shape-of-toys/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": []
+}
