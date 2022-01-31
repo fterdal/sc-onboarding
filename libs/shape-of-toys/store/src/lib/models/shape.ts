@@ -15,4 +15,7 @@ export const Shape = types
     setHovered(newIsHovered: boolean) {
       self.isHovered = newIsHovered;
     },
+    setSelected(newIsSelected: boolean) {
+      self.isSelected = newIsSelected;
+    },
   }));

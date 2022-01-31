@@ -24,8 +24,18 @@ export const RootStore = types
       });
       return hoveredCount;
     },
+    get selectedCount(): number {
+      let selectedCount = 0;
+      self.shapes.forEach((shape) => {
+        if (shape.isSelected) selectedCount++;
+      });
+      return selectedCount;
+    },
   }))
   .actions((self) => ({
+    setMouseDown(newMouseDown: boolean) {
+      self.isMouseDown = newMouseDown;
+    },
     addRandomCircle(canvas: RefObject<HTMLCanvasElement>) {
       const location = getRandomPoint(canvas);
       const shapeToAdd: SnapshotIn<iCircleModel> = {
@@ -87,6 +97,40 @@ export const RootStore = types
           self.hoveredCount >= 1
         ) {
           self.shapes[i].setHovered(false);
+        }
+      }
+    },
+    detectShape(e: { nativeEvent: { offsetX: number; offsetY: number } }) {
+      this.setMouseDown(true);
+      for (let i: number = self.shapes.length - 1; i >= 0; i--) {
+        if (
+          self.isShiftDown &&
+          isAtPoint(
+            e.nativeEvent.offsetX,
+            e.nativeEvent.offsetY,
+            self.shapes[i]
+          )
+        ) {
+          self.shapes[i].setSelected(true);
+        } else if (
+          isAtPoint(
+            e.nativeEvent.offsetX,
+            e.nativeEvent.offsetY,
+            self.shapes[i]
+          ) &&
+          self.selectedCount < 1
+        ) {
+          self.shapes[i].setSelected(true);
+        } else if (
+          isAtPoint(
+            e.nativeEvent.offsetX,
+            e.nativeEvent.offsetY,
+            self.shapes[i]
+          )
+        ) {
+          self.shapes[i].setSelected(false);
+        } else if (self.selectedCount > 0) {
+          self.shapes[i].setSelected(false);
         }
       }
     },

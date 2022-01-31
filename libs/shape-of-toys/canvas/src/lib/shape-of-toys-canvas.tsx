@@ -21,14 +21,17 @@ export const ShapeOfToysCanvas = observer(() => {
     shape: iCircleModel
   ) {
     if (!context) return;
-    if (shape.isHovered) {
+    if (shape.isHovered || shape.isSelected) {
       context.beginPath();
       context.fillStyle = 'gray';
+      context.strokeStyle = 'yellow';
       context.arc(shape.x, shape.y, shape.radius, 0, 360, false);
-      context.fill();
+      if (shape.isHovered) context.fill();
+      if (shape.isSelected) context.stroke();
       context.closePath();
     } else {
       context.beginPath();
+      console.log(shape.color);
       context.fillStyle = shape.color;
       context.arc(shape.x, shape.y, shape.radius, 0, 360, false);
       context.fill();
@@ -41,14 +44,13 @@ export const ShapeOfToysCanvas = observer(() => {
     shape: iSquareModel
   ) {
     if (!context) return;
-    if (shape.isHovered) {
+    if (shape.isHovered || shape.isSelected) {
       context.beginPath();
       context.fillStyle = shape.color;
       context.strokeStyle = 'black';
       context.rect(shape.x, shape.y, shape.width + 20, shape.height + 20);
-      context.fill();
-      context.stroke();
-
+      if (shape.isHovered) context.fill();
+      if (shape.isSelected) context.stroke();
       context.closePath();
     } else {
       context.beginPath();
@@ -129,6 +131,7 @@ export const ShapeOfToysCanvas = observer(() => {
         </Stack>
         <canvas
           onMouseMove={(e) => appContext.handleMouseMove(e)}
+          onMouseDown={(e) => appContext.detectShape(e)}
           ref={canvasRef}
         />
         <p>{JSON.stringify(appContext)}</p>
