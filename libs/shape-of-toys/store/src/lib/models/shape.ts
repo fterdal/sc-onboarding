@@ -11,4 +11,8 @@ export const Shape = types
     isSelected: false,
   })
   .views((self) => ({}))
-  .actions((self) => ({}));
+  .actions((self) => ({
+    setHovered(newIsHovered: boolean) {
+      self.isHovered = newIsHovered;
+    },
+  }));

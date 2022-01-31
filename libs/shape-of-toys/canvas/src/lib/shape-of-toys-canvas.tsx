@@ -21,11 +21,19 @@ export const ShapeOfToysCanvas = observer(() => {
     shape: iCircleModel
   ) {
     if (!context) return;
-    context.beginPath();
-    context.fillStyle = shape.color;
-    context.arc(shape.x, shape.y, shape.radius, 0, 360, false);
-    context.fill();
-    context.closePath();
+    if (shape.isHovered) {
+      context.beginPath();
+      context.fillStyle = 'gray';
+      context.arc(shape.x, shape.y, shape.radius, 0, 360, false);
+      context.fill();
+      context.closePath();
+    } else {
+      context.beginPath();
+      context.fillStyle = shape.color;
+      context.arc(shape.x, shape.y, shape.radius, 0, 360, false);
+      context.fill();
+      context.closePath();
+    }
   }
 
   function drawSquare(
@@ -33,15 +41,24 @@ export const ShapeOfToysCanvas = observer(() => {
     shape: iSquareModel
   ) {
     if (!context) return;
-    context.beginPath();
-    context.fillStyle = shape.color;
-    context.strokeStyle = 'black';
-    // context.fillRect(200, 200, 100, 100);
-    context.rect(shape.x, shape.y, shape.width, shape.height);
-    context.fill();
-    context.stroke();
+    if (shape.isHovered) {
+      context.beginPath();
+      context.fillStyle = shape.color;
+      context.strokeStyle = 'black';
+      context.rect(shape.x, shape.y, shape.width + 20, shape.height + 20);
+      context.fill();
+      context.stroke();
 
-    context.closePath();
+      context.closePath();
+    } else {
+      context.beginPath();
+      context.fillStyle = shape.color;
+      context.strokeStyle = 'black';
+      context.rect(shape.x, shape.y, shape.width, shape.height);
+      context.fill();
+      // context.stroke();
+      context.closePath();
+    }
   }
 
   function redrawCanvas() {
@@ -111,7 +128,7 @@ export const ShapeOfToysCanvas = observer(() => {
           </Button>
         </Stack>
         <canvas ref={canvasRef} />
-        {/* <p>{JSON.stringify(appContext)}</p> */}
+        <p>{JSON.stringify(appContext)}</p>
       </Stack>
     </Container>
   );
