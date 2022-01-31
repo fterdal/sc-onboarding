@@ -1,30 +1,64 @@
+import { Button, Container, Stack } from '@mui/material';
+import {
+  CircleModel,
+  iCircleModel,
+  iSquareModel,
+  SquareModel,
+  useMst,
+} from '@sc-onboarding/shape-of-toys/store';
+import { autorun } from 'mobx';
+import { observer } from 'mobx-react-lite';
 import { useEffect, useRef } from 'react';
 
-/* eslint-disable-next-line */
-export interface ShapeOfToysCanvasProps {}
-
-export function ShapeOfToysCanvas(props: ShapeOfToysCanvasProps) {
+export const ShapeOfToysCanvas = observer(() => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const contextRef = useRef<CanvasRenderingContext2D>();
 
-  function drawCircle(context: CanvasRenderingContext2D) {
+  const appContext = useMst();
+
+  function drawCircle(
+    context: CanvasRenderingContext2D | undefined,
+    shape: iCircleModel
+  ) {
+    if (!context) return;
     context.beginPath();
-    context.fillStyle = 'blue';
-    context.arc(100 - 50, 100, 50, 0, 360, false);
+    context.fillStyle = shape.color;
+    context.arc(shape.x, shape.y, shape.radius, 0, 360, false);
     context.fill();
     context.closePath();
   }
-  
-  function drawSquare(context: CanvasRenderingContext2D) {
+
+  function drawSquare(
+    context: CanvasRenderingContext2D | undefined,
+    shape: iSquareModel
+  ) {
+    if (!context) return;
     context.beginPath();
-    context.fillStyle = 'teal';
+    context.fillStyle = shape.color;
     context.strokeStyle = 'black';
     // context.fillRect(200, 200, 100, 100);
-    context.rect(200, 200, 100, 100);
+    context.rect(shape.x, shape.y, shape.width, shape.height);
     context.fill();
     context.stroke();
 
     context.closePath();
+  }
+
+  function redrawCanvas() {
+    if (!canvasRef.current || !contextRef.current) return;
+    contextRef.current.clearRect(
+      0,
+      0,
+      canvasRef.current?.width,
+      canvasRef.current?.height
+    );
+    appContext.shapes.forEach((shape) => {
+      if (CircleModel.is(shape)) {
+        drawCircle(contextRef.current, shape);
+      } else if (SquareModel.is(shape)) {
+        drawSquare(contextRef.current, shape);
+      }
+    });
   }
 
   useEffect(() => {
@@ -42,17 +76,45 @@ export function ShapeOfToysCanvas(props: ShapeOfToysCanvasProps) {
         canvas.style.background = '#f0f0f0';
         context.lineWidth = 5;
         contextRef.current = context;
-        drawCircle(context);
-        drawSquare(context);
       }
     }
+    autorun(redrawCanvas);
   }, []);
 
   return (
-    <div>
-      <canvas ref={canvasRef} />
-    </div>
+    <Container maxWidth="xl">
+      <Stack direction="column" spacing={2}>
+        <h3>Shape of Toys</h3>
+        <Stack direction="row" pb={2}>
+          <Button
+            onClick={() => {
+              console.log(JSON.stringify(appContext));
+              appContext.addRandomCircle(canvasRef);
+            }}
+          >
+            Add Circle
+          </Button>
+          <Button
+            onClick={() => {
+              console.log(JSON.stringify(appContext));
+              appContext.addRandomSquare(canvasRef);
+            }}
+          >
+            Add Square
+          </Button>
+          <Button
+            onClick={() => {
+              appContext.clear();
+            }}
+          >
+            Clear
+          </Button>
+        </Stack>
+        <canvas ref={canvasRef} />
+        {/* <p>{JSON.stringify(appContext)}</p> */}
+      </Stack>
+    </Container>
   );
-}
+});
 
 export default ShapeOfToysCanvas;
