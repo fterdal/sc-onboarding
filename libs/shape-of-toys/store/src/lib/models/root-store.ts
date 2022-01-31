@@ -2,7 +2,7 @@ import { types, Instance, SnapshotIn } from 'mobx-state-tree';
 
 import { SquareModel, iSquareModel } from './square';
 import { CircleModel, iCircleModel } from './circle';
-import { getRandomPoint } from '../utils/utils';
+import { getRandomPoint, isAtPoint } from '../utils/utils';
 import { RefObject } from 'react';
 
 export type RootStoreModel = Instance<typeof RootStore>;
@@ -16,7 +16,15 @@ export const RootStore = types
     isMouseDown: false,
     isShiftDown: false,
   })
-  .views((self) => ({}))
+  .views((self) => ({
+    get hoveredCount(): number {
+      let hoveredCount = 0;
+      self.shapes.forEach((shape) => {
+        if (shape.isHovered) hoveredCount++;
+      });
+      return hoveredCount;
+    },
+  }))
   .actions((self) => ({
     addRandomCircle(canvas: RefObject<HTMLCanvasElement>) {
       const location = getRandomPoint(canvas);
@@ -51,5 +59,35 @@ export const RootStore = types
     },
     clear() {
       self.shapes.replace([]);
+    },
+    handleMouseMove(e: {
+      movementX: number;
+      movementY: number;
+      nativeEvent: {
+        offsetX: number;
+        offsetY: number;
+      };
+    }) {
+      for (let i: number = self.shapes.length - 1; i >= 0; i--) {
+        if (
+          isAtPoint(
+            e.nativeEvent.offsetX,
+            e.nativeEvent.offsetY,
+            self.shapes[i]
+          ) &&
+          self.hoveredCount < 1
+        ) {
+          self.shapes[i].setHovered(true);
+        } else if (
+          !isAtPoint(
+            e.nativeEvent.offsetX,
+            e.nativeEvent.offsetY,
+            self.shapes[i]
+          ) &&
+          self.hoveredCount >= 1
+        ) {
+          self.shapes[i].setHovered(false);
+        }
+      }
     },
   }));

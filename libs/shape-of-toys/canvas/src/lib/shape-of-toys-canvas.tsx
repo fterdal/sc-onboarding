@@ -127,7 +127,10 @@ export const ShapeOfToysCanvas = observer(() => {
             Clear
           </Button>
         </Stack>
-        <canvas ref={canvasRef} />
+        <canvas
+          onMouseMove={(e) => appContext.handleMouseMove(e)}
+          ref={canvasRef}
+        />
         <p>{JSON.stringify(appContext)}</p>
       </Stack>
     </Container>
