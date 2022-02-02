@@ -70,6 +70,37 @@ export const RootStore = types
     clear() {
       self.shapes.replace([]);
     },
+    handleHoverChanges(
+      e: {
+        movementX: number;
+        movementY: number;
+        nativeEvent: {
+          offsetX: number;
+          offsetY: number;
+        };
+      },
+      i: number
+    ) {
+      if (
+        isAtPoint(
+          e.nativeEvent.offsetX,
+          e.nativeEvent.offsetY,
+          self.shapes[i]
+        ) &&
+        self.hoveredCount < 1
+      ) {
+        self.shapes[i].setHovered(true);
+      } else if (
+        !isAtPoint(
+          e.nativeEvent.offsetX,
+          e.nativeEvent.offsetY,
+          self.shapes[i]
+        ) &&
+        self.hoveredCount >= 1
+      ) {
+        self.shapes[i].setHovered(false);
+      }
+    },
     handleMouseMove(e: {
       movementX: number;
       movementY: number;
@@ -79,24 +110,13 @@ export const RootStore = types
       };
     }) {
       for (let i: number = self.shapes.length - 1; i >= 0; i--) {
-        if (
-          isAtPoint(
-            e.nativeEvent.offsetX,
-            e.nativeEvent.offsetY,
-            self.shapes[i]
-          ) &&
-          self.hoveredCount < 1
-        ) {
-          self.shapes[i].setHovered(true);
-        } else if (
-          !isAtPoint(
-            e.nativeEvent.offsetX,
-            e.nativeEvent.offsetY,
-            self.shapes[i]
-          ) &&
-          self.hoveredCount >= 1
-        ) {
-          self.shapes[i].setHovered(false);
+        if (self.isMouseDown && self.shapes[i].isSelected) {
+          self.shapes[i].updateXAndY(
+            self.shapes[i].x + e.movementX,
+            self.shapes[i].y + e.movementY
+          );
+        } else {
+          this.handleHoverChanges(e, i);
         }
       }
     },

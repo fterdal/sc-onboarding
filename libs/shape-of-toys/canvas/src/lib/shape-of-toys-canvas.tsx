@@ -142,6 +142,7 @@ export const ShapeOfToysCanvas = observer(() => {
         <canvas
           onMouseMove={(e) => appContext.handleMouseMove(e)}
           onMouseDown={(e) => appContext.detectShape(e)}
+          onMouseUp={(e) => appContext.setMouseDown(false)}
           ref={canvasRef}
         />
         <p>{JSON.stringify(appContext)}</p>

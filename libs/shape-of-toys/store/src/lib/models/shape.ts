@@ -18,4 +18,8 @@ export const Shape = types
     setSelected(newIsSelected: boolean) {
       self.isSelected = newIsSelected;
     },
+    updateXAndY(x: number, y: number) {
+      self.x = x;
+      self.y = y;
+    },
   }));
