@@ -23,11 +23,17 @@ export const ShapeOfToysCanvas = observer(() => {
     if (!context) return;
     if (shape.isHovered || shape.isSelected) {
       context.beginPath();
-      context.fillStyle = 'gray';
-      context.strokeStyle = 'yellow';
       context.arc(shape.x, shape.y, shape.radius, 0, 360, false);
-      if (shape.isHovered) context.fill();
-      if (shape.isSelected) context.stroke();
+      if (shape.isHovered) {
+        context.fillStyle = 'gray';
+        context.fill();
+      }
+      if (shape.isSelected) {
+        context.fillStyle = shape.color;
+        context.fill();
+        context.strokeStyle = 'yellow';
+        context.stroke();
+      }
       context.closePath();
     } else {
       context.beginPath();
@@ -45,22 +51,26 @@ export const ShapeOfToysCanvas = observer(() => {
   ) {
     if (!context) return;
     if (shape.isHovered || shape.isSelected) {
-      context.beginPath();
       context.fillStyle = shape.color;
       context.strokeStyle = 'black';
-      context.rect(shape.x, shape.y, shape.width + 20, shape.height + 20);
+      context.beginPath();
+      context.rect(
+        shape.x - 10,
+        shape.y - 10,
+        shape.width + 20,
+        shape.height + 20
+      );
       if (shape.isHovered) context.fill();
       if (shape.isSelected) context.stroke();
       context.closePath();
-    } else {
-      context.beginPath();
-      context.fillStyle = shape.color;
-      context.strokeStyle = 'black';
-      context.rect(shape.x, shape.y, shape.width, shape.height);
-      context.fill();
-      // context.stroke();
-      context.closePath();
     }
+    context.beginPath();
+    context.fillStyle = shape.color;
+    context.strokeStyle = 'black';
+    context.rect(shape.x, shape.y, shape.width, shape.height);
+    context.fill();
+    // context.stroke();
+    context.closePath();
   }
 
   function redrawCanvas() {
