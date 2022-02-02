@@ -36,6 +36,9 @@ export const RootStore = types
     setMouseDown(newMouseDown: boolean) {
       self.isMouseDown = newMouseDown;
     },
+    setShiftDown(newShiftDown: boolean) {
+      self.isShiftDown = newShiftDown;
+    },
     addRandomCircle(canvas: RefObject<HTMLCanvasElement>) {
       const location = getRandomPoint(canvas);
       const shapeToAdd: SnapshotIn<iCircleModel> = {
@@ -123,15 +126,16 @@ export const RootStore = types
     detectShape(e: { nativeEvent: { offsetX: number; offsetY: number } }) {
       this.setMouseDown(true);
       for (let i: number = self.shapes.length - 1; i >= 0; i--) {
-        if (
-          self.isShiftDown &&
-          isAtPoint(
-            e.nativeEvent.offsetX,
-            e.nativeEvent.offsetY,
-            self.shapes[i]
-          )
-        ) {
-          self.shapes[i].setSelected(true);
+        if (self.isShiftDown) {
+          if (
+            isAtPoint(
+              e.nativeEvent.offsetX,
+              e.nativeEvent.offsetY,
+              self.shapes[i]
+            )
+          ) {
+            self.shapes[i].setSelected(true);
+          }
         } else if (
           isAtPoint(
             e.nativeEvent.offsetX,

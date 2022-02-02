@@ -140,9 +140,16 @@ export const ShapeOfToysCanvas = observer(() => {
           </Button>
         </Stack>
         <canvas
+          tabIndex={0}
           onMouseMove={(e) => appContext.handleMouseMove(e)}
           onMouseDown={(e) => appContext.detectShape(e)}
           onMouseUp={(e) => appContext.setMouseDown(false)}
+          onKeyDown={(e) => {
+            if (e.key.toLowerCase() === "shift") appContext.setShiftDown(true);
+          }}
+          onKeyUp={(e) => {
+            if (e.key.toLowerCase() === "shift") appContext.setShiftDown(false);
+          }}
           ref={canvasRef}
         />
         <p>{JSON.stringify(appContext)}</p>
