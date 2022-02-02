@@ -7,7 +7,14 @@ const SquareProps = types
     width: types.number,
   })
   .views((self) => ({}))
-  .actions((self) => ({}));
+  .actions((self) => ({
+    updateHeight(newHeight: number) {
+      self.height = newHeight;
+    },
+    updateWidth(newWidth: number) {
+      self.height = newWidth;
+    },
+  }));
 
 export const SquareModel = types.compose(Shape, SquareProps).named('square');
 export type iSquareModel = Instance<typeof SquareModel>;

@@ -6,7 +6,11 @@ const CircleProps = types
     radius: types.number,
   })
   .views((self) => ({}))
-  .actions((self) => ({}));
+  .actions((self) => ({
+    updateRadius(newRadius: number) {
+      self.radius = newRadius;
+    },
+  }));
 
 export const CircleModel = types.compose(Shape, CircleProps).named('circle');
 export type iCircleModel = Instance<typeof CircleModel>;
