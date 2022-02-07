@@ -17,7 +17,9 @@
     "mobx": "^6.3.13",
     "mobx-react-lite": "^3.2.3",
     "mobx-state-tree": "^5.1.0",
+    "nanoid": "^3.2.0",
     "react": "17.0.2",
+    "react-color": "^2.19.3",
     "react-dom": "17.0.2",
     "regenerator-runtime": "0.13.7",
     "tslib": "^2.0.0"
@@ -37,6 +39,7 @@
     "@types/jest": "27.0.2",
     "@types/node": "16.11.7",
     "@types/react": "17.0.30",
+    "@types/react-color": "^3.0.6",
     "@types/react-dom": "17.0.9",
     "@typescript-eslint/eslint-plugin": "~5.3.0",
     "@typescript-eslint/parser": "~5.3.0",

@@ -11,7 +11,7 @@ import { autorun } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import { useEffect, useRef } from 'react';
 
-export const ShapeOfToysCanvas = observer(() => {
+export const ShapeOfToysCanvas = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const contextRef = useRef<CanvasRenderingContext2D>();
 
@@ -140,24 +140,27 @@ export const ShapeOfToysCanvas = observer(() => {
             Clear
           </Button>
         </Stack>
-        <canvas
-          tabIndex={0}
-          onMouseMove={(e) => appContext.handleMouseMove(e)}
-          onMouseDown={(e) => appContext.detectShape(e)}
-          onMouseUp={(e) => appContext.setMouseDown(false)}
-          onKeyDown={(e) => {
-            if (e.key.toLowerCase() === "shift") appContext.setShiftDown(true);
-          }}
-          onKeyUp={(e) => {
-            if (e.key.toLowerCase() === "shift") appContext.setShiftDown(false);
-          }}
-          ref={canvasRef}
-        />
-        <p>{JSON.stringify(appContext)}</p>
-        <SelectedItemStack />
+        <Stack direction="row">
+          <canvas
+            tabIndex={0}
+            onMouseMove={(e) => appContext.handleMouseMove(e)}
+            onMouseDown={(e) => appContext.detectShape(e)}
+            onMouseUp={(e) => appContext.setMouseDown(false)}
+            onKeyDown={(e) => {
+              if (e.key.toLowerCase() === 'shift')
+                appContext.setShiftDown(true);
+            }}
+            onKeyUp={(e) => {
+              if (e.key.toLowerCase() === 'shift')
+                appContext.setShiftDown(false);
+            }}
+            ref={canvasRef}
+          />
+          <SelectedItemStack />
+        </Stack>
       </Stack>
     </Container>
   );
-});
+};
 
 export default ShapeOfToysCanvas;

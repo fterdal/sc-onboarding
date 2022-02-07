@@ -10,7 +10,10 @@ export const SelectedItemStack = observer(() => {
       {appContext.shapes.map(
         (shape) =>
           shape.isSelected && (
-            <SelectedItem shape={shape} removeShape={() => {}} />
+            <SelectedItem
+              shape={shape}
+              removeShape={() => appContext.removeShape(shape.id)}
+            />
           )
       )}
     </Stack>

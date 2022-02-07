@@ -1,9 +1,10 @@
-import { types, Instance, SnapshotIn } from 'mobx-state-tree';
+import { types, Instance, SnapshotIn, destroy } from 'mobx-state-tree';
 
 import { SquareModel, iSquareModel } from './square';
 import { CircleModel, iCircleModel } from './circle';
 import { getRandomPoint, isAtPoint } from '../utils/utils';
 import { RefObject } from 'react';
+import { nanoid } from 'nanoid';
 
 export type RootStoreModel = Instance<typeof RootStore>;
 
@@ -42,7 +43,7 @@ export const RootStore = types
     addRandomCircle(canvas: RefObject<HTMLCanvasElement>) {
       const location = getRandomPoint(canvas);
       const shapeToAdd: SnapshotIn<iCircleModel> = {
-        id: '1',
+        id: nanoid(),
         x: location.x,
         y: location.y,
         color: 'blue',
@@ -55,7 +56,7 @@ export const RootStore = types
     addRandomSquare(canvas: RefObject<HTMLCanvasElement>) {
       const location = getRandomPoint(canvas);
       const shapeToAdd: SnapshotIn<iSquareModel> = {
-        id: '1',
+        id: nanoid(),
         x: location.x,
         y: location.y,
         color: 'teal',
@@ -69,6 +70,10 @@ export const RootStore = types
     // TODO add type
     addShape(shape: any) {
       self.shapes.push(shape);
+    },
+    removeShape(shapeId: string) {
+     const filteredShapes = self.shapes.filter((currShape: iSquareModel | iCircleModel) => (currShape.id === shapeId));
+     destroy(filteredShapes[0]);
     },
     clear() {
       self.shapes.replace([]);
