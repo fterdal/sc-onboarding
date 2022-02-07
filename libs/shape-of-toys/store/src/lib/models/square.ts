@@ -12,7 +12,7 @@ const SquareProps = types
       self.height = newHeight;
     },
     updateWidth(newWidth: number) {
-      self.height = newWidth;
+      self.width = newWidth;
     },
   }));
 

@@ -1,1 +1,1 @@
-export * from './lib/shape-of-toys-selected-items';
+export { SelectedItemStack } from "./lib/SelectedItemStack";

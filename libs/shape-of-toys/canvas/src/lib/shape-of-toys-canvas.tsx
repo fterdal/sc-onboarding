@@ -1,4 +1,5 @@
 import { Button, Container, Stack } from '@mui/material';
+import { SelectedItemStack } from '@sc-onboarding/shape-of-toys/selected-items';
 import {
   CircleModel,
   iCircleModel,
@@ -153,6 +154,7 @@ export const ShapeOfToysCanvas = observer(() => {
           ref={canvasRef}
         />
         <p>{JSON.stringify(appContext)}</p>
+        <SelectedItemStack />
       </Stack>
     </Container>
   );
